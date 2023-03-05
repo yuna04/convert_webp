@@ -1,2 +1,2 @@
 # convert_webp
-It'll convert most(?) image formats to png so the name is misleading lol
+Very simple converter and will fail if the filename contains multiple periods.
