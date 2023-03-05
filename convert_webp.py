@@ -9,8 +9,8 @@ if __name__ == "__main__":
     else:
         try:
             img = Image.open(sys.argv[1])
-            s = sys.argv[1].split(".")
-            if s[1] != "webp":
+            s = sys.argv[-1].split(".")
+            if s[-1] != "webp":
                 print("File is not webp and will not be converted.")
             else:
                 img.save(f"{s[0]}.png", "PNG")
