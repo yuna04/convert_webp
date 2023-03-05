@@ -2,9 +2,6 @@ from PIL import Image
 import sys
 
 if __name__ == "__main__":
-    print(len(sys.argv))
-    print(sys.argv[0])
-    print(sys.argv[1])
     if len(sys.argv) == 1:
         print("No arguments provided.\nPlease provide an argument.")
     elif len(sys.argv) > 2:
@@ -12,7 +9,10 @@ if __name__ == "__main__":
     else:
         try:
             img = Image.open(sys.argv[1])
-            s = sys.argv[1].split(".webp")
-            img.save(f"{s[0]}.png", "PNG")
+            s = sys.argv[1].split(".")
+            if s[1] != "webp":
+                print("File is not webp and will not be converted.")
+            else:
+                img.save(f"{s[0]}.png", "PNG")
         except OSError:
             print(f"Cannot convert {sys.argv[1]}")
