@@ -12,7 +12,9 @@ if __name__ == "__main__":
             s = sys.argv[-1].split(".")
             i = 0
             for frame in ImageSequence.Iterator(img):
-                i += 1                
+                i += 1
+                if i >= 2:
+                    break                
             if s[-1] != "webp":
                 print("File is not webp and will not be converted.")
             elif i > 1:
