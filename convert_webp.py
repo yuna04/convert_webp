@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageSequence
 import sys
 
 if __name__ == "__main__":
@@ -10,8 +10,14 @@ if __name__ == "__main__":
         try:
             img = Image.open(sys.argv[1])
             s = sys.argv[-1].split(".")
+            i = 0
+            for frame in ImageSequence.Iterator(img):
+                i += 1                
             if s[-1] != "webp":
                 print("File is not webp and will not be converted.")
+            elif i > 1:
+                img.info.pop('background', None)
+                img.save(f"{s[0]}.gif", "GIF", save_all=True)
             else:
                 img.save(f"{s[0]}.png", "PNG")
         except OSError:
