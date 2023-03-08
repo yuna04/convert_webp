@@ -6,11 +6,23 @@ def convert_png(img, s):
 
 def convert_gif(img, s):
     img.info.pop('background', None)
-    img.save(f"{s[0]}.gif", "GIF", save_all=True)
+    img.save(f"{s[0]}.gif", "GIF", save_all=True, disposal=2)
 
-def check_animated(img, i):
+def convert_all():
+    file_list = os.listdir()
+    for file in file_list:
+        if file.split(".")[-1] == "webp":
+            img = Image.open(file)
+            s = file.split(".")
+            i = check_animated(img)
+            if i > 1:
+                convert_gif(img, s)
+            else:
+                convert_png(img, s)
+
+def check_animated(img):
+    i = 0
     for frame in ImageSequence.Iterator(img):
-        print(i)
         i += 1
         if i >= 2:
             return i
@@ -23,25 +35,10 @@ if __name__ == "__main__":
     else:
         try:
             if sys.argv[1] == "ALL":
-                cwd = os.getcwd()
-                file_list = os.listdir()
-                for file in file_list:
-                    print(file)
-                    if file.split(".")[-1] == "webp":
-                        img = Image.open(file)
-                        s = file.split(".")
-                        i = 0
-                        i = check_animated(img, i)
-                        print(i)
-                        if i > 1:
-                            convert_gif(img, s)
-                        else:
-                            convert_png(img, s)
-
+                convert_all()
             img = Image.open(sys.argv[1]) 
             s = sys.argv[-1].split(".")
-            i = 0
-            i = check_animated(img, i)
+            i = check_animated(img)
             if s[-1] != "webp":
                 print("File is not webp and will not be converted.")
             elif i > 1:
@@ -50,4 +47,4 @@ if __name__ == "__main__":
                 convert_png(img, s)
                 
         except OSError:
-            print(f"OS Error. Likely from iterating through directory. Shouldn't matter.")
+            print(f"Some type of OS error lol")
