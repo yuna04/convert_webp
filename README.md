@@ -1,2 +1,2 @@
 # convert_webp
-sucks
+Simple script to convert webp to PNG/GIF.
