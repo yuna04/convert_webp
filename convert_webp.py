@@ -8,7 +8,7 @@ def convert_gif(img, s):
     img.info.pop('background', None)
     img.save(f"{s[0]}.gif", "GIF", save_all=True)
 
-def checkIfAnimated(img, i):
+def check_animated(img, i):
     for frame in ImageSequence.Iterator(img):
         print(i)
         i += 1
@@ -31,7 +31,7 @@ if __name__ == "__main__":
                         img = Image.open(file)
                         s = file.split(".")
                         i = 0
-                        i = checkIfAnimated(img, i)
+                        i = check_animated(img, i)
                         print(i)
                         if i > 1:
                             convert_gif(img, s)
@@ -41,7 +41,7 @@ if __name__ == "__main__":
             img = Image.open(sys.argv[1]) 
             s = sys.argv[-1].split(".")
             i = 0
-            i = checkIfAnimated(img, i)
+            i = check_animated(img, i)
             if s[-1] != "webp":
                 print("File is not webp and will not be converted.")
             elif i > 1:
@@ -50,4 +50,4 @@ if __name__ == "__main__":
                 convert_png(img, s)
                 
         except OSError:
-            print(f"Cannot convert {sys.argv[1]}")
+            print(f"OS Error. Likely from iterating through directory. Shouldn't matter.")
