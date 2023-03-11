@@ -46,3 +46,4 @@ if __name__ == "__main__":
         
         except OSError:
             print(f"Some type of OS error lol")
+            
